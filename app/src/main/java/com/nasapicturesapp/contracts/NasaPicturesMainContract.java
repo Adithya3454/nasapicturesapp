@@ -23,10 +23,11 @@ public class NasaPicturesMainContract {
     public interface GetNasaPicturesInteractor {
 
         interface NasaPicturesLoadingFinishedListener{
-            void onFinishedLoading(List<NasaPicture> nasaPictureList);
+            void onCompletion(List<NasaPicture> nasaPictureList);
+            void onFailure(String error);
         }
 
-        void getPicturesForNasaGallery(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener);
+        void getPicturesForNasaGallery();
     }
 
 }
