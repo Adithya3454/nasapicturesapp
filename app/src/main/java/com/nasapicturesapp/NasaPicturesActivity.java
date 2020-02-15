@@ -2,9 +2,12 @@ package com.nasapicturesapp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
 import com.nasapicturesapp.contracts.NasaPicturesMainContract;
 import com.nasapicturesapp.implementors.GetNasaPicturesImpl;
 import com.nasapicturesapp.model.NasaPicture;
@@ -13,6 +16,7 @@ import com.nasapicturesapp.presentors.NasaPicturesPresentor;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NasaPicturesActivity extends AppCompatActivity implements NasaPicturesMainContract.NasaPicturesView {
@@ -25,6 +29,12 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //full screen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
         progressBar = findViewById(R.id.progress_bar);
@@ -46,7 +56,9 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
 
     @Override
     public void displayNasaPictures(List<NasaPicture> nasaPictureList) {
-        
+        System.out.println("received pictures");
+        nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        nasaPicturesRecyclerView.setAdapter(new NasaPictureGalleryAdapter(nasaPictureList, getApplicationContext()));
     }
 
     @Override
