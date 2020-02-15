@@ -11,6 +11,10 @@ public class NasaPicturesMainContract {
         void showProgress();
 
         void hideProgress();
+
+        void displayNasaPictures(List<NasaPicture> nasaPictureList);
+
+        void showError(String error);
     }
 
     public interface NasaPicturesPresenter {
@@ -27,7 +31,7 @@ public class NasaPicturesMainContract {
             void onFailure(String error);
         }
 
-        void getPicturesForNasaGallery();
+        void getPicturesForNasaGallery(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener);
     }
 
 }

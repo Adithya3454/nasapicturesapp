@@ -26,13 +26,12 @@ public class GetNasaPicturesImpl implements NasaPicturesMainContract.GetNasaPict
     private NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener;
     private Context context;
 
-    public GetNasaPicturesImpl(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener, Context context) {
-        this.nasaPicturesLoadingFinishedListener = nasaPicturesLoadingFinishedListener;
+    public GetNasaPicturesImpl(Context context) {
         this.context = context;
     }
 
     @Override
-    public void getPicturesForNasaGallery() {
+    public void getPicturesForNasaGallery(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener) {
         if (nasaPicturesLoadingFinishedListener != null) {
             List<NasaPicture> nasaPictureList = loadNasaPicturesFromAssets(context);
             if (nasaPictureList.size() > 0)
