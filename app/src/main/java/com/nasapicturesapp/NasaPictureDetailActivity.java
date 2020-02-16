@@ -31,7 +31,8 @@ public class NasaPictureDetailActivity extends AppCompatActivity implements Nasa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nasa_picture_detail);
 
-        itemToStartAt = getIntent().getExtras().getInt(Constants.ITEM_POSITION);
+        if (getIntent().getExtras() != null)
+            itemToStartAt = getIntent().getExtras().getInt(Constants.ITEM_POSITION);
 
         progressBar = findViewById(R.id.progress_bar);
         nasaPicturesRecyclerView = findViewById(R.id.nasa_picture_detail_recycler_view);
