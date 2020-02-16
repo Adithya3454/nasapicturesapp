@@ -1,5 +1,7 @@
 package com.nasapicturesapp.adapters;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +25,14 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
 
     private List<NasaPicture> nasaPictureList;
     private Context context;
+    long DURATION = 300;
+    private boolean on_attach = true;
 
+    /**
+     * constructor for gallery adapter
+     * @param nasaPictureList a list of pictures
+     * @param context activity context
+     */
     public NasaPictureGalleryAdapter(List<NasaPicture> nasaPictureList, Context context) {
         this.nasaPictureList = nasaPictureList;
         this.context = context;
@@ -49,6 +58,7 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
             }
         });
         Picasso.get().load(nasaPictureList.get(position).getUrl()).fit().placeholder(R.drawable.ic_nasa_vector_logo).into(holder.galleryItem);
+        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -56,6 +66,9 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
         return nasaPictureList.size();
     }
 
+    /**
+     * class that represents an item in a gallery
+     */
     class NasaGalleryItem extends RecyclerView.ViewHolder {
         ImageView galleryItem;
 
@@ -63,5 +76,42 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
             super(itemView);
             galleryItem = itemView.findViewById(R.id.image);
         }
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                on_attach = false;
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    /**
+     * animate x to y movement of a view
+     * @param itemView view to be animated
+     * @param i position of the view in the recycler view
+     */
+    private void setAnimation(View itemView, int i) {
+        if(!on_attach){
+            i = -1;
+        }
+        boolean not_first_item = i == -1;
+        i = i + 1;
+        itemView.setTranslationX(-400f);
+        itemView.setAlpha(0.f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(itemView, "translationX", -400f, 0);
+        ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(itemView, "alpha", 1.f);
+        ObjectAnimator.ofFloat(itemView, "alpha", 0.f).start();
+        animatorTranslateY.setStartDelay(not_first_item ? DURATION : (i * DURATION));
+        animatorTranslateY.setDuration((not_first_item ? 2 : 1) * DURATION);
+        animatorSet.playTogether(animatorTranslateY, animatorAlpha);
+        animatorSet.start();
     }
 }

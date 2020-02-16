@@ -1,5 +1,8 @@
 package com.nasapicturesapp;
 
+/**
+ * contains all the constants used across the app
+ */
 public class Constants {
 
     public final static String copyright_key = "copyright";

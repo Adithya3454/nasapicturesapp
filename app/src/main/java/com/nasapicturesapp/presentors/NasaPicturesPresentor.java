@@ -6,6 +6,9 @@ import com.nasapicturesapp.model.NasaPicture;
 
 import java.util.List;
 
+/**
+ * class implementing presentor and interactor to facilitate presentation of the data on the activity
+ */
 public class NasaPicturesPresentor implements NasaPicturesMainContract.NasaPicturesPresenter,  NasaPicturesMainContract.GetNasaPicturesInteractor.NasaPicturesLoadingFinishedListener{
 
     private NasaPicturesMainContract.NasaPicturesView nasaPicturesView;

@@ -64,4 +64,5 @@ public class NasaPictureDetailActivity extends AppCompatActivity implements Nasa
         errorMessage.setVisibility(View.VISIBLE);
         errorMessage.setText(error);
     }
+
 }

@@ -4,8 +4,15 @@ import com.nasapicturesapp.model.NasaPicture;
 
 import java.util.List;
 
+
+/**
+ * Main contract that contains all the interfaces for loading and presenting data ont he activity
+ */
 public class NasaPicturesMainContract {
 
+    /**
+     * interface for the view operations
+     */
     public interface NasaPicturesView{
 
         void showProgress();
@@ -17,6 +24,9 @@ public class NasaPicturesMainContract {
         void showError(String error);
     }
 
+    /**
+     * interface for loading data
+     */
     public interface NasaPicturesPresenter {
 
         void loadNasaPicturesGallery();
@@ -24,6 +34,9 @@ public class NasaPicturesMainContract {
         void onDestroy();
     }
 
+    /**
+     * interface for interactor
+     */
     public interface GetNasaPicturesInteractor {
 
         interface NasaPicturesLoadingFinishedListener{
