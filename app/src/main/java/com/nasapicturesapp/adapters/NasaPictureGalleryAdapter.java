@@ -44,6 +44,7 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
                 Bundle pictureToStartWith = new Bundle();
                 pictureToStartWith.putInt(Constants.ITEM_POSITION, position);
                 Intent openNasaPictureDetails = new Intent(context, NasaPictureDetailActivity.class);
+                openNasaPictureDetails.putExtras(pictureToStartWith);
                 context.startActivity(openNasaPictureDetails);
             }
         });

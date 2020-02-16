@@ -15,6 +15,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class NasaPictureDetailActivity extends AppCompatActivity implements NasaPicturesMainContract.NasaPicturesView {
@@ -23,11 +24,14 @@ public class NasaPictureDetailActivity extends AppCompatActivity implements Nasa
     private ProgressBar progressBar;
     NasaPicturesPresentor picturesPresenter;
     private TextView errorMessage;
+    private int itemToStartAt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nasa_picture_detail);
+
+        itemToStartAt = getIntent().getExtras().getInt(Constants.ITEM_POSITION);
 
         progressBar = findViewById(R.id.progress_bar);
         nasaPicturesRecyclerView = findViewById(R.id.nasa_picture_detail_recycler_view);
@@ -48,8 +52,11 @@ public class NasaPictureDetailActivity extends AppCompatActivity implements Nasa
 
     @Override
     public void displayNasaPictures(List<NasaPicture> nasaPictureList) {
-        nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false));
         nasaPicturesRecyclerView.setAdapter(new NasaPictureDetailAdapter(nasaPictureList));
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(nasaPicturesRecyclerView);
+        nasaPicturesRecyclerView.scrollToPosition(itemToStartAt);
     }
 
     @Override

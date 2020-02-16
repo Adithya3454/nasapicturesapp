@@ -17,12 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NasaPictureDetailAdapter extends RecyclerView.Adapter<NasaPictureDetailAdapter.NasaDetailItem> {
 
-
     private List<NasaPicture> nasaPictureList;
 
     public NasaPictureDetailAdapter(List<NasaPicture> nasaPictureList) {
         this.nasaPictureList = nasaPictureList;
-        Picasso.get().setIndicatorsEnabled(true);
     }
 
     @NonNull
@@ -36,11 +34,14 @@ public class NasaPictureDetailAdapter extends RecyclerView.Adapter<NasaPictureDe
     public void onBindViewHolder(@NonNull NasaDetailItem holder, int position) {
         NasaPicture nasaPicture = nasaPictureList.get(position);
         holder.title.setText(nasaPicture.getTitle());
-        holder.explanation.setText(nasaPicture.getExplanation());
-        holder.copyright.setText(nasaPicture.getCopyright());
-        holder.date.setText(nasaPicture.getDate());
-        holder.url.setText(nasaPicture.getUrl());
-        holder.url.setText(nasaPicture.getHdurl());
+        holder.explanation.setText("Explanation"+ "\n" +nasaPicture.getExplanation());
+        if (nasaPicture.getCopyright() != null && nasaPicture.getCopyright().length() > 0)
+            holder.copyright.setText("Copyright: "+nasaPicture.getCopyright());
+        else
+            holder.copyright.setVisibility(View.GONE);
+        holder.date.setText("Date: "+nasaPicture.getDate());
+        holder.url.setText("URL: "+nasaPicture.getUrl());
+        holder.hdurl.setText("HD URL: "+nasaPicture.getHdurl());
 
         Picasso.get().load(nasaPicture.getHdurl()).placeholder(R.drawable.ic_nasa_vector_logo).fit().into(holder.image);
     }
