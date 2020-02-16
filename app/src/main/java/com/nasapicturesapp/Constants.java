@@ -11,4 +11,5 @@ public class Constants {
     public final static String title_key = "title";
     public final static String url_key = "url";
 
+    public static final String ITEM_POSITION = "ITEM_POSITION";
 }

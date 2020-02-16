@@ -1,11 +1,15 @@
 package com.nasapicturesapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.nasapicturesapp.Constants;
+import com.nasapicturesapp.NasaPictureDetailActivity;
 import com.nasapicturesapp.R;
 import com.nasapicturesapp.model.NasaPicture;
 import com.squareup.picasso.Picasso;
@@ -33,9 +37,17 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NasaGalleryItem holder, int position) {
+    public void onBindViewHolder(@NonNull NasaGalleryItem holder, final int position) {
+        holder.galleryItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle pictureToStartWith = new Bundle();
+                pictureToStartWith.putInt(Constants.ITEM_POSITION, position);
+                Intent openNasaPictureDetails = new Intent(context, NasaPictureDetailActivity.class);
+                context.startActivity(openNasaPictureDetails);
+            }
+        });
         Picasso.get().load(nasaPictureList.get(position).getUrl()).fit().placeholder(R.drawable.ic_nasa_vector_logo).into(holder.galleryItem);
-
     }
 
     @Override
@@ -45,7 +57,8 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
 
     class NasaGalleryItem extends RecyclerView.ViewHolder {
         ImageView galleryItem;
-        public NasaGalleryItem(@NonNull View itemView) {
+
+        NasaGalleryItem(@NonNull View itemView) {
             super(itemView);
             galleryItem = itemView.findViewById(R.id.image);
         }

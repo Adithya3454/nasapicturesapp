@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
+import com.nasapicturesapp.adapters.NasaPictureDetailAdapter;
 import com.nasapicturesapp.contracts.NasaPicturesMainContract;
 import com.nasapicturesapp.implementors.GetNasaPicturesImpl;
 import com.nasapicturesapp.model.NasaPicture;
@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NasaPicturesActivity extends AppCompatActivity implements NasaPicturesMainContract.NasaPicturesView {
+public class NasaPictureDetailActivity extends AppCompatActivity implements NasaPicturesMainContract.NasaPicturesView {
 
     private RecyclerView nasaPicturesRecyclerView;
     private ProgressBar progressBar;
@@ -27,10 +27,10 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_nasa_picture_detail);
 
         progressBar = findViewById(R.id.progress_bar);
-        nasaPicturesRecyclerView = findViewById(R.id.nasa_pictures_recycler_view);
+        nasaPicturesRecyclerView = findViewById(R.id.nasa_picture_detail_recycler_view);
         errorMessage = findViewById(R.id.message);
         picturesPresenter = new NasaPicturesPresentor(this, new GetNasaPicturesImpl(getApplicationContext()));
         picturesPresenter.loadNasaPicturesGallery();
@@ -48,20 +48,13 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
 
     @Override
     public void displayNasaPictures(List<NasaPicture> nasaPictureList) {
-        System.out.println("received pictures");
-        nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        nasaPicturesRecyclerView.setAdapter(new NasaPictureGalleryAdapter(nasaPictureList, this));
+        nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        nasaPicturesRecyclerView.setAdapter(new NasaPictureDetailAdapter(nasaPictureList));
     }
 
     @Override
     public void showError(String error) {
-        hideProgress();
+        errorMessage.setVisibility(View.VISIBLE);
         errorMessage.setText(error);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        picturesPresenter.onDestroy();
     }
 }
