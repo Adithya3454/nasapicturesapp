@@ -28,7 +28,6 @@ import java.util.List;
 public class GetNasaPicturesImpl implements NasaPicturesMainContract.GetNasaPicturesInteractor {
 
     private String JSON_FILE_NAME = "data.json";
-    private NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener;
     private Context context;
 
     public GetNasaPicturesImpl(Context context) {
@@ -39,7 +38,7 @@ public class GetNasaPicturesImpl implements NasaPicturesMainContract.GetNasaPict
     public void getPicturesForNasaGallery(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener) {
         if (nasaPicturesLoadingFinishedListener != null) {
             List<NasaPicture> nasaPictureList = loadNasaPicturesFromAssets(context);
-            nasaPictureList = sortNasaPicturesByMOstRecentDate(nasaPictureList);
+            nasaPictureList = sortNasaPicturesByMostRecentDate(nasaPictureList);
             if (nasaPictureList.size() > 0)
                 nasaPicturesLoadingFinishedListener.onCompletion(nasaPictureList);
             else
@@ -130,7 +129,12 @@ public class GetNasaPicturesImpl implements NasaPicturesMainContract.GetNasaPict
     }
 
 
-    private List<NasaPicture> sortNasaPicturesByMOstRecentDate(List<NasaPicture> nasaPictureList){
+    /**
+     * Sort a list of NasaPicture objects by most recently added
+     * @param nasaPictureList a list of pictures to be sorted
+     * @return a ist of sorted pictures
+     */
+    private List<NasaPicture> sortNasaPicturesByMostRecentDate(List<NasaPicture> nasaPictureList){
         final DateFormat nasaPictureDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Collections.sort(nasaPictureList, new Comparator<NasaPicture>() {
             @Override

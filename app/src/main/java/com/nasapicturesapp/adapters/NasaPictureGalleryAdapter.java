@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.nasapicturesapp.Constants;
 import com.nasapicturesapp.NasaPictureDetailActivity;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureGalleryAdapter.NasaGalleryItem> {
 
     private List<NasaPicture> nasaPictureList;
+    private NasaPictureGalleryAdpterItemClickListener nasaPictureGalleryAdpterItemClickListener;
     private Context context;
     long DURATION = 300;
     private boolean on_attach = true;
@@ -33,9 +35,10 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
      * @param nasaPictureList a list of pictures
      * @param context activity context
      */
-    public NasaPictureGalleryAdapter(List<NasaPicture> nasaPictureList, Context context) {
-        this.nasaPictureList = nasaPictureList;
+    public NasaPictureGalleryAdapter(List<NasaPicture> nasaPictureList, Context context, NasaPictureGalleryAdpterItemClickListener nasaPictureGalleryAdpterItemClickListener) {
         this.context = context;
+        this.nasaPictureList = nasaPictureList;
+        this.nasaPictureGalleryAdpterItemClickListener = nasaPictureGalleryAdpterItemClickListener;
     }
 
     @NonNull
@@ -57,6 +60,17 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
                 context.startActivity(openNasaPictureDetails);
             }
         });
+
+        holder.galleryItem.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (nasaPictureGalleryAdpterItemClickListener != null)
+                    nasaPictureGalleryAdpterItemClickListener.onItemLongClickListener(nasaPictureList.get(position));
+                Toast.makeText(context, "long click detected!", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
         Picasso.get().load(nasaPictureList.get(position).getUrl()).fit().placeholder(R.drawable.ic_nasa_vector_logo).into(holder.galleryItem);
     }
 
@@ -75,6 +89,13 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
             super(itemView);
             galleryItem = itemView.findViewById(R.id.image);
         }
+    }
+
+    /**
+     * interface for listening to long click on nasapictures recycelerview item
+     */
+    public interface NasaPictureGalleryAdpterItemClickListener{
+        void onItemLongClickListener(NasaPicture nasaPicture);
     }
 
 }

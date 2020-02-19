@@ -2,4 +2,6 @@
     <string name="app_name">NASA Pictures App</string>
     <string name="no_pictures_available">No pictures available</string>
     <string name="image_nasa">An image from NASA</string>
+    <string name="set_wallpaper">Set image as wallpaper</string>
+    <string name="share_image">Share image</string>
 </resources>

@@ -22,6 +22,8 @@ public class NasaPicturesMainContract {
         void displayNasaPictures(List<NasaPicture> nasaPictureList);
 
         void showError(String error);
+
+        void showDialogForPicture(NasaPicture nasaPicture);
     }
 
     /**

@@ -66,4 +66,8 @@ public class NasaPictureDetailActivity extends AppCompatActivity implements Nasa
         errorMessage.setText(error);
     }
 
+    @Override
+    public void showDialogForPicture(NasaPicture nasaPicture) {
+
+    }
 }

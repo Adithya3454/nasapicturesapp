@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
 import com.nasapicturesapp.contracts.NasaPicturesMainContract;
+import com.nasapicturesapp.dialog.ImageOptionsDialogFragment;
 import com.nasapicturesapp.implementors.GetNasaPicturesImpl;
 import com.nasapicturesapp.model.NasaPicture;
 import com.nasapicturesapp.presentors.NasaPicturesPresentor;
@@ -23,6 +24,7 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     private ProgressBar progressBar;
     NasaPicturesPresentor picturesPresenter;
     private TextView errorMessage;
+    private ImageOptionsDialogFragment imageOptionsDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
 
         progressBar = findViewById(R.id.progress_bar);
         nasaPicturesRecyclerView = findViewById(R.id.nasa_pictures_recycler_view);
+        imageOptionsDialogFragment = new ImageOptionsDialogFragment();
         errorMessage = findViewById(R.id.message);
         picturesPresenter = new NasaPicturesPresentor(this, new GetNasaPicturesImpl(getApplicationContext()));
         picturesPresenter.loadNasaPicturesGallery();
@@ -50,7 +53,7 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     public void displayNasaPictures(List<NasaPicture> nasaPictureList) {
         System.out.println("received pictures");
         nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        nasaPicturesRecyclerView.setAdapter(new NasaPictureGalleryAdapter(nasaPictureList, this));
+        nasaPicturesRecyclerView.setAdapter(new NasaPictureGalleryAdapter(nasaPictureList, this, picturesPresenter));
     }
 
     @Override
@@ -60,8 +63,15 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     }
 
     @Override
+    public void showDialogForPicture(NasaPicture nasaPicture) {
+        imageOptionsDialogFragment.show(getSupportFragmentManager(), Constants.IMAGE_OPTIONS_DIALOG);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         picturesPresenter.onDestroy();
     }
+
+
 }

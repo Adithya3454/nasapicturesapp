@@ -15,4 +15,5 @@ public class Constants {
     public final static String url_key = "url";
 
     public static final String ITEM_POSITION = "ITEM_POSITION";
+    public static final String IMAGE_OPTIONS_DIALOG = "IMAGE_OPTIONS_DIALOG";
 }

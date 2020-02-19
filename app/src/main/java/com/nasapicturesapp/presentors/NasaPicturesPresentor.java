@@ -1,5 +1,6 @@
 package com.nasapicturesapp.presentors;
 
+import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
 import com.nasapicturesapp.contracts.NasaPicturesMainContract;
 import com.nasapicturesapp.implementors.GetNasaPicturesImpl;
 import com.nasapicturesapp.model.NasaPicture;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * class implementing presentor and interactor to facilitate presentation of the data on the activity
  */
-public class NasaPicturesPresentor implements NasaPicturesMainContract.NasaPicturesPresenter,  NasaPicturesMainContract.GetNasaPicturesInteractor.NasaPicturesLoadingFinishedListener{
+public class NasaPicturesPresentor implements NasaPicturesMainContract.NasaPicturesPresenter,  NasaPicturesMainContract.GetNasaPicturesInteractor.NasaPicturesLoadingFinishedListener, NasaPictureGalleryAdapter.NasaPictureGalleryAdpterItemClickListener {
 
     private NasaPicturesMainContract.NasaPicturesView nasaPicturesView;
     private GetNasaPicturesImpl getNasaPictures;
@@ -47,5 +48,11 @@ public class NasaPicturesPresentor implements NasaPicturesMainContract.NasaPictu
             nasaPicturesView.showError(error);
         }
 
+    }
+
+    @Override
+    public void onItemLongClickListener(NasaPicture nasaPicture) {
+        if (nasaPicturesView != null)
+            nasaPicturesView.showDialogForPicture(nasaPicture);
     }
 }
