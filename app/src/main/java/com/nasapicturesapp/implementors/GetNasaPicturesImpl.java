@@ -13,7 +13,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -34,6 +39,7 @@ public class GetNasaPicturesImpl implements NasaPicturesMainContract.GetNasaPict
     public void getPicturesForNasaGallery(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener) {
         if (nasaPicturesLoadingFinishedListener != null) {
             List<NasaPicture> nasaPictureList = loadNasaPicturesFromAssets(context);
+            nasaPictureList = sortNasaPicturesByMOstRecentDate(nasaPictureList);
             if (nasaPictureList.size() > 0)
                 nasaPicturesLoadingFinishedListener.onCompletion(nasaPictureList);
             else
@@ -121,5 +127,22 @@ public class GetNasaPicturesImpl implements NasaPicturesMainContract.GetNasaPict
             return null;
         }
         return json;
+    }
+
+
+    private List<NasaPicture> sortNasaPicturesByMOstRecentDate(List<NasaPicture> nasaPictureList){
+        final DateFormat nasaPictureDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Collections.sort(nasaPictureList, new Comparator<NasaPicture>() {
+            @Override
+            public int compare(NasaPicture o1, NasaPicture o2) {
+                try {
+                    return nasaPictureDateFormat.parse(o2.getDate()).compareTo(nasaPictureDateFormat.parse(o1.getDate()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return 0;
+            }
+        });
+        return nasaPictureList;
     }
 }
