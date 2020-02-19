@@ -22,8 +22,6 @@ public class NasaPicturesMainContract {
         void displayNasaPictures(List<NasaPicture> nasaPictureList);
 
         void showError(String error);
-
-        void showDialogForPicture(NasaPicture nasaPicture);
     }
 
     /**
@@ -47,6 +45,14 @@ public class NasaPicturesMainContract {
         }
 
         void getPicturesForNasaGallery(NasaPicturesLoadingFinishedListener nasaPicturesLoadingFinishedListener);
+    }
+
+    public interface DialogForSelectedNasaPicture {
+
+        void showDialogForPicture(NasaPicture nasaPicture);
+
+        void selectedOptionForNasaPicture(int selectedOption, NasaPicture nasaPicture);
+
     }
 
 }

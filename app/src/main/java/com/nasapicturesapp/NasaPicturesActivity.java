@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
 import com.nasapicturesapp.contracts.NasaPicturesMainContract;
@@ -18,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NasaPicturesActivity extends AppCompatActivity implements NasaPicturesMainContract.NasaPicturesView {
+public class NasaPicturesActivity extends AppCompatActivity implements NasaPicturesMainContract.NasaPicturesView, NasaPicturesMainContract.DialogForSelectedNasaPicture {
 
     private RecyclerView nasaPicturesRecyclerView;
     private ProgressBar progressBar;
@@ -33,9 +34,9 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
 
         progressBar = findViewById(R.id.progress_bar);
         nasaPicturesRecyclerView = findViewById(R.id.nasa_pictures_recycler_view);
-        imageOptionsDialogFragment = new ImageOptionsDialogFragment();
         errorMessage = findViewById(R.id.message);
-        picturesPresenter = new NasaPicturesPresentor(this, new GetNasaPicturesImpl(getApplicationContext()));
+        picturesPresenter = new NasaPicturesPresentor(this, new GetNasaPicturesImpl(getApplicationContext()), this);
+        imageOptionsDialogFragment = new ImageOptionsDialogFragment(picturesPresenter);
         picturesPresenter.loadNasaPicturesGallery();
     }
 
@@ -63,15 +64,19 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     }
 
     @Override
-    public void showDialogForPicture(NasaPicture nasaPicture) {
-        imageOptionsDialogFragment.show(getSupportFragmentManager(), Constants.IMAGE_OPTIONS_DIALOG);
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         picturesPresenter.onDestroy();
     }
 
 
+    @Override
+    public void showDialogForPicture(NasaPicture nasaPicture) {
+        imageOptionsDialogFragment.showDialogForItem(getSupportFragmentManager(), nasaPicture);
+    }
+
+    @Override
+    public void selectedOptionForNasaPicture(int selectedOption, NasaPicture nasaPicture) {
+        Toast.makeText(this, "option selected: "+selectedOption, Toast.LENGTH_SHORT).show();
+    }
 }
