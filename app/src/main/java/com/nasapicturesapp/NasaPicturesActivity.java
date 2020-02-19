@@ -90,5 +90,7 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
         Utils utils = new Utils();
         if (selectedOption == 1)
             utils.setWallPaper(this, nasaPicture.getUrl(), this);
+        else if (selectedOption == 0)
+            utils.shareImage(this, nasaPicture.getUrl());
     }
 }
