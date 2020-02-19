@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nasapicturesapp.Utils.Utils;
 import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
@@ -89,7 +88,7 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
     public void selectedOptionForNasaPicture(int selectedOption, NasaPicture nasaPicture) {
         Utils utils = new Utils();
         if (selectedOption == 1)
-            utils.setWallPaper(this, nasaPicture.getUrl(), this);
+            utils.setWallPaper(this, nasaPicture.getUrl());
         else if (selectedOption == 0)
             utils.shareImage(this, nasaPicture.getUrl());
     }
