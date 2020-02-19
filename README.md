@@ -1,5 +1,5 @@
 # Nasapicturesapp - Android App
-Nasapicturesapp has a curarted list of interesting pictures from NASA, you can set them as you wallpaper by pressing and holding on an image and selecting the option "Set as wallpaper" or oyu can share it with your friends.
+Nasapicturesapp has a curarted list of interesting pictures from NASA, you can set them as you wallpaper by pressing and holding on an image and selecting the option "Set as wallpaper" or you can share it with your friends.
 
 ## Features
 
