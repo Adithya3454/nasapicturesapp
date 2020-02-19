@@ -1,13 +1,11 @@
 package com.nasapicturesapp.dialog;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,8 +61,8 @@ public class ImageOptionsDialogFragment extends DialogFragment {
         share.setOnClickListener(onClickListener);
         setAsWallPaper.setOnClickListener(onClickListener);
 
-        builder.setView(menuOptions).setTitle("Choose an option");
-        builder.setView(menuOptions).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setView(menuOptions).setTitle(getContext().getString(R.string.choose_option));
+        builder.setView(menuOptions).setPositiveButton(getContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 ImageOptionsDialogFragment.this.dismiss();

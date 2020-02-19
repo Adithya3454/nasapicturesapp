@@ -66,7 +66,7 @@ public class NasaPictureGalleryAdapter extends RecyclerView.Adapter<NasaPictureG
             public boolean onLongClick(View v) {
                 if (nasaPictureGalleryAdpterItemClickListener != null)
                     nasaPictureGalleryAdpterItemClickListener.onItemLongClickListener(nasaPictureList.get(position));
-                Toast.makeText(context, "long click detected!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "long click detected!", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

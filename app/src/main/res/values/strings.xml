@@ -4,4 +4,6 @@
     <string name="image_nasa">An image from NASA</string>
     <string name="set_wallpaper">Set image as wallpaper</string>
     <string name="share_image">Share image</string>
+    <string name="choose_option">Choose an option</string>
+    <string name="ok">Ok</string>
 </resources>

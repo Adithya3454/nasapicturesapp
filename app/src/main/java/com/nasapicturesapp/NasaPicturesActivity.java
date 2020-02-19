@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nasapicturesapp.Utils.Utils;
 import com.nasapicturesapp.adapters.NasaPictureGalleryAdapter;
 import com.nasapicturesapp.contracts.NasaPicturesMainContract;
 import com.nasapicturesapp.dialog.ImageOptionsDialogFragment;
@@ -40,14 +41,23 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
         picturesPresenter.loadNasaPicturesGallery();
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideProgress();
+    }
+
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
+        nasaPicturesRecyclerView.setClickable(true);
     }
 
     @Override
     public void hideProgress() {
         progressBar.setVisibility(View.INVISIBLE);
+        nasaPicturesRecyclerView.setClickable(false);
     }
 
     @Override
@@ -77,6 +87,8 @@ public class NasaPicturesActivity extends AppCompatActivity implements NasaPictu
 
     @Override
     public void selectedOptionForNasaPicture(int selectedOption, NasaPicture nasaPicture) {
-        Toast.makeText(this, "option selected: "+selectedOption, Toast.LENGTH_SHORT).show();
+        Utils utils = new Utils();
+        if (selectedOption == 1)
+            utils.setWallPaper(this, nasaPicture.getUrl(), this);
     }
 }

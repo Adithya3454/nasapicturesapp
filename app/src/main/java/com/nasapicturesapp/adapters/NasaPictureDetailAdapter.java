@@ -25,6 +25,7 @@ public class NasaPictureDetailAdapter extends RecyclerView.Adapter<NasaPictureDe
 
     /**
      * constructor for picture detail adapter
+     *
      * @param nasaPictureList a list of pictures to be displayed
      */
     public NasaPictureDetailAdapter(List<NasaPicture> nasaPictureList) {
@@ -42,17 +43,16 @@ public class NasaPictureDetailAdapter extends RecyclerView.Adapter<NasaPictureDe
     public void onBindViewHolder(@NonNull NasaDetailItem holder, int position) {
         NasaPicture nasaPicture = nasaPictureList.get(position);
         holder.title.setText(nasaPicture.getTitle());
-        holder.explanation.setText("Explanation"+ "\n" +nasaPicture.getExplanation());
+        holder.explanation.setText("Explanation" + "\n" + nasaPicture.getExplanation());
         if (nasaPicture.getCopyright() != null && nasaPicture.getCopyright().length() > 0)
-            holder.copyright.setText("Copyright: "+nasaPicture.getCopyright());
+            holder.copyright.setText("Copyright: " + nasaPicture.getCopyright());
         else
             holder.copyright.setVisibility(View.GONE);
-        holder.date.setText("Date: "+nasaPicture.getDate());
-        holder.url.setText("URL: "+nasaPicture.getUrl());
-        holder.hdurl.setText("HD URL: "+nasaPicture.getHdurl());
+        holder.date.setText("Date: " + nasaPicture.getDate());
+        holder.url.setText("URL: " + nasaPicture.getUrl());
+        holder.hdurl.setText("HD URL: " + nasaPicture.getHdurl());
 
         Picasso.get().load(nasaPicture.getHdurl()).placeholder(R.drawable.ic_nasa_vector_logo).fit().into(holder.image);
-        setAnimation(holder.itemView, position);
     }
 
     @Override
@@ -80,40 +80,4 @@ public class NasaPictureDetailAdapter extends RecyclerView.Adapter<NasaPictureDe
         }
     }
 
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                on_attach = false;
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    /**
-     * animate x to y movement of a view
-     * @param itemView view to be animated
-     * @param i position of the view in the recycler view
-     */
-    private void setAnimation(View itemView, int i) {
-        if(!on_attach){
-            i = -1;
-        }
-        boolean not_first_item = i == -1;
-        i = i + 1;
-        itemView.setTranslationX(-400f);
-        itemView.setAlpha(0.f);
-        AnimatorSet animatorSet = new AnimatorSet();
-        ObjectAnimator animatorTranslateY = ObjectAnimator.ofFloat(itemView, "translationX", -400f, 0);
-        ObjectAnimator animatorAlpha = ObjectAnimator.ofFloat(itemView, "alpha", 1.f);
-        ObjectAnimator.ofFloat(itemView, "alpha", 0.f).start();
-        animatorTranslateY.setStartDelay(not_first_item ? DURATION : (i * DURATION));
-        animatorTranslateY.setDuration((not_first_item ? 2 : 1) * DURATION);
-        animatorSet.playTogether(animatorTranslateY, animatorAlpha);
-        animatorSet.start();
-    }
 }
