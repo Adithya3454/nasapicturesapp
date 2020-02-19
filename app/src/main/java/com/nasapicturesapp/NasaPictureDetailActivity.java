@@ -54,7 +54,7 @@ public class NasaPictureDetailActivity extends AppCompatActivity implements Nasa
     @Override
     public void displayNasaPictures(List<NasaPicture> nasaPictureList) {
         nasaPicturesRecyclerView.setLayoutManager(new GridLayoutManager(this, 1, GridLayoutManager.HORIZONTAL, false));
-        nasaPicturesRecyclerView.setAdapter(new NasaPictureDetailAdapter(nasaPictureList));
+        nasaPicturesRecyclerView.setAdapter(new NasaPictureDetailAdapter(nasaPictureList, this));
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(nasaPicturesRecyclerView);
         nasaPicturesRecyclerView.scrollToPosition(itemToStartAt);
